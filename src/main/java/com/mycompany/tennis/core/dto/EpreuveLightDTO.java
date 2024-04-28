@@ -13,7 +13,11 @@ public class EpreuveLightDTO {
 	/** 
 	 * CONSTRUCTEUR
 	 */
-	public EpreuveLightDTO(){
+	public EpreuveLightDTO(){}
+	public EpreuveLightDTO(EpreuveLightDTO epreuve){
+		this.id 		= epreuve.getId();
+		this.annee		= epreuve.getAnnee();
+		this.typeEpreuve= epreuve.getTypeEpreuve();
 	}
 	// Conversion vers un DTO
 	public EpreuveLightDTO(Epreuve epreuve){

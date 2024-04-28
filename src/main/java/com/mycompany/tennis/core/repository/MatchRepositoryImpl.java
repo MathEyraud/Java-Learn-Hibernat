@@ -7,9 +7,20 @@ import com.mycompany.tennis.core.util.HibernateUtil;
 
 public class MatchRepositoryImpl {
 	
-	// TODO : A FAIRE
 	public void create(Match match) {
-		
+		// Création de la variable de session
+        Session session = null;
+        
+    	try{
+    		// On récupère la session en cours
+    		session = HibernateUtil.getCurrentSession();
+    		
+        	// Création de l'entité
+        	session.persist(match);
+        	
+		} catch (Throwable e) {
+            e.printStackTrace();
+		}
 	}
 	public Match getMatchById(Long id) {
     	
@@ -21,7 +32,7 @@ public class MatchRepositoryImpl {
     		// On récupère la sessions en cours
     		session = HibernateUtil.getCurrentSession();
     		
-        	// Récupération du joueur
+    		// Récupération des données
         	return session.get(Match.class, id);
         	
 		} catch (Throwable e) {
@@ -29,5 +40,20 @@ public class MatchRepositoryImpl {
             return null;
 		}
     }
-
+	public void deleteMatchById(Long id) {
+    	
+        // Création de la variable de session
+    	Session session = null;
+        
+    	try{
+    		
+    		// On récupère la sessions en cours
+    		session = HibernateUtil.getCurrentSession();
+    		Match match = session.get(Match.class, id);
+    		session.remove(match);
+    		
+		} catch (Throwable e) {
+            e.printStackTrace();
+		}
+    }
 }

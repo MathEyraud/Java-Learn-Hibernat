@@ -15,13 +15,17 @@ public class JoueurDTO {
 	 * CONSTRUCTEUR
 	 */
 	public JoueurDTO() {}
-	
 	public JoueurDTO(String nom, String prenom, String sexe) {
 		this.nom 	= nom;
 		this.prenom = prenom;
 		this.sexe 	= sexe.charAt(0);
 	}
-	
+	public JoueurDTO(JoueurDTO joueur) {
+		this.id		= joueur.getId();
+		this.nom 	= joueur.getNom();
+		this.prenom = joueur.getPrenom();
+		this.sexe 	= joueur.getSexe();
+	}
 	// Conversion vers un DTO
 	public JoueurDTO(Joueur joueur) {
 		this.id		= joueur.getId();

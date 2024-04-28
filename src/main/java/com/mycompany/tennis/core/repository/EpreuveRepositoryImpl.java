@@ -33,7 +33,7 @@ public class EpreuveRepositoryImpl {
     		// On récupère la sessions en cours
     		session = HibernateUtil.getCurrentSession();
     		
-        	// Récupération du joueur
+    		// Récupération des données
         	return session.get(Epreuve.class, id);
         	
 		} catch (Throwable e) {

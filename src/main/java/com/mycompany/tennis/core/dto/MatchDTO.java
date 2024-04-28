@@ -1,7 +1,5 @@
 package com.mycompany.tennis.core.dto;
 
-import com.mycompany.tennis.core.entity.Epreuve;
-import com.mycompany.tennis.core.entity.Joueur;
 import com.mycompany.tennis.core.entity.Match;
 
 import jakarta.persistence.Entity;
@@ -18,24 +16,25 @@ public class MatchDTO {
 	private EpreuveFullDTO 	epreuve;
 	private JoueurDTO 		vainqueur;
 	private JoueurDTO 		finaliste;
-	//private Score 	score;
+	private ScoreDTO 		score;
 	
 	/*
 	 * CONSTRUCTEURS
 	 */
-	public MatchDTO(EpreuveFullDTO epreuve, JoueurDTO vainqueur, JoueurDTO finaliste) {
+	public MatchDTO() {}
+	public MatchDTO(EpreuveFullDTO epreuve, JoueurDTO vainqueur, JoueurDTO finaliste, ScoreDTO score) {
 		this.epreuve 	= epreuve;
 		this.vainqueur 	= vainqueur;
 		this.finaliste 	= finaliste;
+		this.score 		= score;
 	}
 	
 	// Conversion vers un DTO
-	public MatchDTO(Match newMatch) {
-		this.id 		= newMatch.getId();
-		this.epreuve 	= new EpreuveFullDTO(newMatch.getEpreuve());
-		this.vainqueur 	= new JoueurDTO(newMatch.getVainqueur());
-		this.finaliste 	= new JoueurDTO(newMatch.getFinaliste());
-		//this.score		= newMatch.getScore();
+	public MatchDTO(Match match) {
+		this.id 		= match.getId();
+		this.epreuve 	= new EpreuveFullDTO(match.getEpreuve());
+		this.vainqueur 	= new JoueurDTO(match.getVainqueur());
+		this.finaliste 	= new JoueurDTO(match.getFinaliste());
 	}
 	
 	/** 
@@ -48,7 +47,7 @@ public class MatchDTO {
                 "Epreuve="	+ this.epreuve 	+ " / " +
                 "Vainqueur="+ this.vainqueur+ " / " +
                 "Finaliste="+ this.finaliste+ " / " +
-                //"Score=" 	+ this.score 	+
+                "Score=" 	+ this.score 	+
                 '}';
     }
 	
@@ -85,6 +84,14 @@ public class MatchDTO {
 
 	public void setFinaliste(JoueurDTO finaliste) {
 		this.finaliste = finaliste;
+	}
+
+	public ScoreDTO getScore() {
+		return score;
+	}
+
+	public void setScore(ScoreDTO score) {
+		this.score = score;
 	}
 
 }

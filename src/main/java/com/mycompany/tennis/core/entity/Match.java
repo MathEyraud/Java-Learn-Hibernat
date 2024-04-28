@@ -2,6 +2,7 @@ package com.mycompany.tennis.core.entity;
 
 import com.mycompany.tennis.core.dto.MatchDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="match_tennis")
@@ -38,7 +38,14 @@ public class Match {
 	@JoinColumn(name = "ID_FINALISTE")
 	private Joueur finaliste;
 	
-	@Transient
+	@OneToOne(
+		mappedBy="match", 
+		fetch = FetchType.LAZY,
+		// Ajouter les entitées liées lors de la création
+		cascade = CascadeType.PERSIST,
+		// Supprimer les entités liées lors de la suppression
+		orphanRemoval = true
+	)
 	private Score score;
 	
 	/*
@@ -54,7 +61,9 @@ public class Match {
 	}
 	// Convertir depuis un DTO
 	public Match(MatchDTO newMatch) {
-		this.id 		= newMatch.getId();
+		if(newMatch.getId()!=null) {
+			this.id 		= newMatch.getId();
+		}
 		this.epreuve 	= new Epreuve(newMatch.getEpreuve());
 		this.vainqueur 	= new Joueur(newMatch.getVainqueur());
 		this.finaliste 	= new Joueur(newMatch.getFinaliste());

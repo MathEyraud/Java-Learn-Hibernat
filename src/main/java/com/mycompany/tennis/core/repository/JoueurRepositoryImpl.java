@@ -16,7 +16,7 @@ public class JoueurRepositoryImpl {
     		// On récupère la session en cours
     		session = HibernateUtil.getCurrentSession();
     		
-        	// Création du joueur
+        	// Création de l'entité
         	session.persist(joueur);
         	
 		} catch (Throwable e) {
@@ -34,7 +34,7 @@ public class JoueurRepositoryImpl {
     		session = HibernateUtil.getCurrentSession();
     		Joueur joueur = session.get(Joueur.class, id);
     		
-        	// Récupération du joueur
+        	// Récupération des données
         	return joueur;
         	
 		} catch (Throwable e) {
@@ -54,7 +54,7 @@ public class JoueurRepositoryImpl {
     		// On récupère la sessions en cours
     		session = HibernateUtil.getCurrentSession();
     		
-    		// Suppression du joueur
+    		// Suppression des données
     		session.remove(joueur);
     		// Ancienne méthode : session.delete(joueur);
         	

@@ -32,7 +32,7 @@ public class TournoiRepositoryImpl {
     		// On récupère la sessions en cours
     		session = HibernateUtil.getCurrentSession();
     		
-        	// Récupération du joueur
+    		// Récupération des données
         	return session.get(Tournoi.class, id);
         	
 		} catch (Throwable e) {
@@ -51,10 +51,10 @@ public class TournoiRepositoryImpl {
     		// On récupère la sessions en cours
     		session = HibernateUtil.getCurrentSession();
     		
-    		// Suppression du joueur
+    		// Suppression des données
     		session.remove(tournoi);
     		
-    		// Ancienne méthode : session.delete(joueur);
+    		// Ancienne méthode : session.delete(tournoi);
         	
 		} catch (Throwable e) {
             e.printStackTrace();

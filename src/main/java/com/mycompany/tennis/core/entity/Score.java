@@ -1,17 +1,21 @@
 package com.mycompany.tennis.core.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="score_vainqueur")
 public class Score {
 	
-	/* 
+	/** 
 	 * ATTRIBUT
 	 */
 	@Id
@@ -19,8 +23,11 @@ public class Score {
 	@Column(name = "ID")
 	private Long id;
 	
-	//TODO : Ajouter la bonne liaison de donnée pour match, car Objet et pas ID.
-	//@Column(name = "SET_1")
+	@OneToOne(
+		fetch = FetchType.LAZY, 
+		cascade = CascadeType.REMOVE
+	)
+	@JoinColumn(name = "ID_MATCH")
 	private Match match;
 	
 	@Column(name = "SET_1")
@@ -76,6 +83,15 @@ public class Score {
 		this.set3=set3;
 		this.set4=set4;
 		this.set5=set5;
+	}
+	public Score(Long id, Match match, Byte set1, Byte set2, Byte set3, Byte set4, Byte set5) {
+		this.id 	= id;
+		this.match 	= match;
+		this.set1	= set1;
+		this.set2	= set2;
+		this.set3	= set3;
+		this.set4	= set4;
+		this.set5	= set5;
 	}
 	
 	/** 
@@ -151,8 +167,4 @@ public class Score {
 	public void setMatch(Match match) {
 		this.match = match;
 	}
-	
-	
-		
-	
 }

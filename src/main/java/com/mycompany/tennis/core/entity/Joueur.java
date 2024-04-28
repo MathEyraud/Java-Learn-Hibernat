@@ -48,7 +48,15 @@ public class Joueur {
 		this.sexe 	= sexe;
 	}
 	
+	public Joueur(Joueur joueur) {
+		this.id		= joueur.getId();
+		this.nom 	= joueur.getNom();
+		this.prenom = joueur.getPrenom();
+		this.sexe 	= joueur.getSexe();
+	}
+	
 	public Joueur(JoueurDTO dto) {
+		this.id		= dto.getId();
 		this.nom 	= dto.getNom();
 		this.prenom = dto.getPrenom();
 		this.sexe 	= dto.getSexe();
