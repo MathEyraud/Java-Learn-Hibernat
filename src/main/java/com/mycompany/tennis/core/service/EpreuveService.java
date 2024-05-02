@@ -1,6 +1,8 @@
 package com.mycompany.tennis.core.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -166,5 +168,49 @@ public class EpreuveService {
     	
 		return epreuveLightDTO;
 	}
-	
+	// Méthode avec HQL + Jointures + Dynamic fetching
+	public List<EpreuveFullDTO> getEpreuvesByCodeTournoi(String codeTournoi){
+    	// ------------------------------------------- //
+		// Méthode avec la transaction dans le service //
+    	// ------------------------------------------- //
+		// Pour Eviter d'avoir des méthodes différentes dans les repositories
+		// On transfert la transaction dans le service
+		// Pas propre mais il faut Spring pour aller plus loin
+    	
+        // Création de la variable pour la transaction
+        Transaction transaction = null;
+        List<Epreuve> epreuves = null;
+		
+        // Variable pour gérer la connexion à la DB
+        // Utilisation d'un TryWithRessource
+        // On ouvre une session
+    	try(Session session = HibernateUtil.getCurrentSession()) {
+    		
+    		// On débute la transaction
+    		transaction = session.beginTransaction();
+            
+        	// on récupère les joueurs
+    		epreuves = epreuveRepository.getEpreuvesByCodeTournoi(codeTournoi);
+    		
+    		List<EpreuveFullDTO> epreuvesDTO = new ArrayList<>();
+    		for(Epreuve epreuve: epreuves) {
+    			EpreuveFullDTO epreuveDTO = new EpreuveFullDTO(epreuve);
+    			epreuvesDTO.add(epreuveDTO);
+    		}
+    		
+        	// Commit : Cela assure que les modifications apportées à la base de données sont validées
+        	transaction.commit();
+        	
+        	return epreuvesDTO;
+            
+		} catch (Exception e) {
+			
+			if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("Erreur lors de la lecture des épreuves.");
+	            e.printStackTrace();
+	            return null;
+			}
+		}
 }

@@ -1,5 +1,7 @@
 package com.mycompany.tennis.core.entity;
 
+import org.hibernate.annotations.NamedQuery;
+
 import com.mycompany.tennis.core.dto.JoueurDTO;
 
 import jakarta.persistence.Column;
@@ -9,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@NamedQuery(query = "SELECT j FROM Joueur j WHERE j.sexe=?1",name="getJoueursBySexe")
 @Entity
 @Table(name="joueur")
 public class Joueur {

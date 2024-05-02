@@ -1,5 +1,8 @@
 package com.mycompany.tennis.core.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -212,6 +215,96 @@ public class JoueurService {
             }
             System.out.println("Erreur lors de la lecture du joueur.");
             e.printStackTrace();
+		}
+	}
+	// Méthode avec HQL
+	public List<JoueurDTO> getJoueurs(){
+    	// ------------------------------------------- //
+		// Méthode avec la transaction dans le service //
+    	// ------------------------------------------- //
+		// Pour Eviter d'avoir des méthodes différentes dans les repositories
+		// On transfert la transaction dans le service
+		// Pas propre mais il faut Spring pour aller plus loin
+    	
+        // Création de la variable pour la transaction
+        Transaction transaction = null;
+        List<Joueur> joueurs = null;
+		
+        // Variable pour gérer la connexion à la DB
+        // Utilisation d'un TryWithRessource
+        // On ouvre une session
+    	try(Session session = HibernateUtil.getCurrentSession()) {
+    		
+    		// On débute la transaction
+    		transaction = session.beginTransaction();
+            
+        	// on récupère les joueurs
+    		joueurs = joueurRepository.getJoueurs();
+    		
+    		List<JoueurDTO> joueursDTO = new ArrayList<>();
+    		for(Joueur joueur : joueurs) {
+    			JoueurDTO joueurDTO = new JoueurDTO(joueur);
+    			joueursDTO.add(joueurDTO);
+    		}
+    		
+        	// Commit : Cela assure que les modifications apportées à la base de données sont validées
+        	transaction.commit();
+        	
+        	return joueursDTO;
+            
+		} catch (Exception e) {
+			
+			if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("Erreur lors de la lecture du joueur.");
+            e.printStackTrace();
+            return null;
+		}
+	}
+	// Méthode avec HQL
+	public List<JoueurDTO> getJoueursBySexe(char sexe){
+    	// ------------------------------------------- //
+		// Méthode avec la transaction dans le service //
+    	// ------------------------------------------- //
+		// Pour Eviter d'avoir des méthodes différentes dans les repositories
+		// On transfert la transaction dans le service
+		// Pas propre mais il faut Spring pour aller plus loin
+    	
+        // Création de la variable pour la transaction
+        Transaction transaction = null;
+        List<Joueur> joueurs = null;
+		
+        // Variable pour gérer la connexion à la DB
+        // Utilisation d'un TryWithRessource
+        // On ouvre une session
+    	try(Session session = HibernateUtil.getCurrentSession()) {
+    		
+    		// On débute la transaction
+    		transaction = session.beginTransaction();
+            
+        	// on récupère les joueurs
+    		joueurs = joueurRepository.getJoueursBySexe(sexe);
+    		
+    		List<JoueurDTO> joueursDTO = new ArrayList<>();
+    		for(Joueur joueur : joueurs) {
+    			JoueurDTO joueurDTO = new JoueurDTO(joueur);
+    			joueursDTO.add(joueurDTO);
+    		}
+    		
+        	// Commit : Cela assure que les modifications apportées à la base de données sont validées
+        	transaction.commit();
+        	
+        	return joueursDTO;
+            
+		} catch (Exception e) {
+			
+			if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("Erreur lors de la lecture du joueur.");
+            e.printStackTrace();
+            return null;
 		}
 	}
 }
