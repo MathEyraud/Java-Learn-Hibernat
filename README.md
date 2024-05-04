@@ -1,4 +1,4 @@
-# Projet Hibernat
+# Projet Hibernate
 - Suite du projet "Java-Learn-JDBC" (https://github.com/MathEyraud/Java-Learn-JDBC).
 - Exactement la même chose que ce dépôt, mais en utilisant Hibernate plutot que JDBC.
 - Petite subtilité par rapport à JDBC, il y a besoin d'un projet qui implémente des contrôleurs pour être propre.
